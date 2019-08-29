@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import xlwt as xlwt
 pd.set_option('display.unicode.ambiguous_as_wide', True)
 pd.set_option('display.unicode.east_asian_width', True)
 plt.rcParams['font.sans-serif']=['SimHei']
@@ -129,7 +130,18 @@ def rfm_func(x):
 rfm['label'] = rfm[['R' , 'F' , 'M']].apply(lambda x:x-x.mean()).apply(rfm_func , axis=1)
 # print(rfm.head())
 rfm_label = rfm.loc[rfm['label'] == '一般挽留客户'].reset_index()
-print(rfm_label.USERID)
+rfm_111 = rfm_label['USERID'].tolist()
+# def writexlxs(list):
+#   workbook = xlwt.Workbook(encoding='utf-8')
+#   worksheet = workbook.add_sheet('sheet1')
+#   worksheet.write(0,0,label="用户ID")
+#   i=1
+#   for data in list:
+#       worksheet.write(i , 0 , label=data)
+#       i=i+1
+#   workbook.save(r'C:\Users\Administrator\Desktop\11.csv')
+# writexlxs(rfm_111)
+# print(rfm_111)
 rfm_df = rfm.label.value_counts().reset_index()
 plt.figure(figsize=(10,5))
 sns.barplot(x=rfm_df['index'] , y=rfm_df['label'] , data=rfm_df ,alpha=0.7)
